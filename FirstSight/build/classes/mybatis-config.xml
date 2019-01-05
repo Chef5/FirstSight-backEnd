@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <!-- 数据库的配置、事务的控制、设置、实体类及映射文件的位置等信息都写在spring里 -->
+ <configuration>
+ 	<typeAliases>
+ 		<package name="cn.zzboy.pojo"/>
+ 	</typeAliases>
+ </configuration>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+	<!--第一步： 配置数据源信息 -->
+	<bean id="dataSource" 
+	 class="org.apache.commons.dbcp.BasicDataSource" 
+	 destroy-method="close">
+	 	<property name="driverClassName">
+	 		<value>com.mysql.jdbc.Driver</value>
+	 	</property>
+	 	<property name="url">
+	 		<value>jdbc:mysql://127.0.0.1:3306/firstsight?useUnicode=true&amp;characterEncoding=utf-8</value>
+	 	</property>
+	 	<property name="username" value="root"></property>
+	 	<property name="password" value="123123"></property>
+	</bean>
+	<!-- spring封装了mybatis操作 -->
+	<!-- 第二步：配置 SqlSessionFactoryBean-->
+	<bean id="sqlSessionFactoryBean" 
+	 class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<!--1、 引用数据源 -->
+	 	<property name="dataSource" ref="dataSource"></property>
+	 	<!--2、 告知spring mybaits配置文件的名称 -->
+	 	<property name="configLocation" 
+	 		value="classpath:mybatis-config.xml">
+	 	</property>	 	
+	</bean>
+	<!-- 
+	    MapperScannerConfigurer作用：
+	    1、扫描制定的包，根据扫描到的mapper.xml文件，生成实现类，并自动创建实现类对象
+	    2、自动装配SqlSessionFactoryBean的对象，自动调用SqlSessionTemplate，去执行生成的DB操作方法
+	 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.zzboy.dao"></property>
+	</bean>
+	
+	<!-- 告知springIoC扫描包，根据注解来创建对象 -->
+	<context:component-scan base-package="cn.zzboy.service"></context:component-scan>
+	<context:component-scan base-package="cn.zzboy.controller"></context:component-scan>
+</beans>
+
+
+
+
+
+
+
+
+

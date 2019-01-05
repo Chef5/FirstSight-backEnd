@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzboy.dao.user.UserMapper" >
+	<!-- 获取热门推荐 -->
+	<select id="checkUser" resultType="User" parameterType="User">
+		select * from fs_user where phone=#{phone}
+	</select>
+	<!-- 用户注册 -->
+	<select id="regUser" parameterType="User">
+		insert into fs_user(name,phone,password,isAdmin,crtTime,crtBy) values('新会员',#{phone},#{password},0,#{crtTime},10000)
+	</select>
+	<!-- 用户信息 -->
+	<select id="getUserById" resultType="User" parameterType="int">
+		select * from fs_user where id=#{id}
+	</select>
+	<!-- 更新用户昵称和手机号 -->
+	<update id="mdfUserNameandPhone" parameterType="User">
+		update fs_user set name=#{name},phone=#{phone},mdfTime=#{mdfTime},mdfBy=#{mdfBy} where id=#{id}
+	</update>
+	<!-- 更细用户密码 -->
+	<update id="mdfUserPassword" parameterType="User">
+		update fs_user set password=#{password},mdfTime=#{mdfTime},mdfBy=#{mdfBy} where id=#{id}
+	</update>
+</mapper>

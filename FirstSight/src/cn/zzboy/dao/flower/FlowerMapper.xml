@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzboy.dao.flower.FlowerMapper">
+	<!-- 获取热门推荐 -->
+	<select id="getHotFlowerList" resultType="Flower">
+		select id,name,kind,price,picture from fs_flower order by sales DESC limit 4
+	</select>
+	<!-- 依据专区获取8个商品 -->
+	<select id="getFlowerByKind" resultType="Flower">
+		select * from fs_flower where kind=#{kind} order by sales DESC limit 8
+	</select>
+	<!-- 获取鲜花详细 -->
+	<select id="getFlowerById" resultType="Flower">
+		select * from fs_flower where id=#{id}
+	</select>
+	<!-- 搜索结果 -->
+	<select id="getFlowerBySerch" resultType="Flower" parameterType="String">
+		select * from fs_flower where code=#{info} 
+				or name like CONCAT('%',#{info},'%') 
+				or nameDisc like CONCAT('%',#{info},'%') 
+				or material like CONCAT('%',#{info},'%') 
+				or wrap like CONCAT('%',#{info},'%') 
+				or word like CONCAT('%',#{info},'%')
+	</select>
+	<!-- 获取所有商品 -->
+	<select id="getAllFlower" resultType="Flower">
+		select * from fs_flower
+	</select>
+</mapper>

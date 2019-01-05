@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>商品详细-初见花店</title>
+		<script src="./js/vue.js"></script>   <!-- 引入js -->
+		<script src="./js/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/model.css" />
+		<link rel="stylesheet" href="css/detail.css" />
+	</head>
+	<body>
+		<div id="vueroot" class="page">
+			<!-- 头部固定内容 -->
+			<div class="heder">
+				<!-- 最顶部注册、登录、购物车显示 -->
+				<div class="hd-top">
+					<div class="hd-top-left">
+						<div class="ht-top-left-item">
+							<!-- <img src="img/1.jpg"/> -->
+							<span>关注微信</span>
+							<span>微信小程序</span>
+						</div>
+					</div>
+					<div class="hd-top-right">
+						<div class="hd-top-right-item" v-if="isLogin==0">
+							<a href="reg.html">登录</a>/<a href="reg.html">注册</a>
+						</div>
+						<div class="hd-top-right-item" v-else-if="isAdmin==1">
+							<a href="admin.html">欢迎&nbsp;{{name}},管理中心</a>/<a href="#" v-on:click="logOut">注销</a>
+						</div>
+						<div class="hd-top-right-item" v-else="isAdmin==0">
+							<a href="my.html">欢迎&nbsp;{{name}},个人中心</a>/<a href="#" v-on:click="logOut">注销</a>
+						</div>
+						<div class="hd-top-right-item">
+							<a href="my.html">订单查询</a>
+						</div>
+						<div class="hd-top-right-item">
+							<span class="glyphicon glyphicon-shopping-cart"></span><a>购物车(1)</a>
+						</div>
+						<div class="hd-top-right-item">
+							<span class="ht-top-right-item-info">中国初见花店·FirstSight</span>
+						</div>
+					</div>
+				</div>
+				<!-- logo、搜索、服务展示区 -->
+				<div class="hd-display">
+					<div class="hd-display-logo">
+						<img src="img/logo.jpg"/>
+					</div>
+					<div class="hd-display-serch">
+						<div class="col-lg-6" >
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="商品关键、编号" v-model="info">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" v-on:click="serch">搜索</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="hd-display-service">
+						<div class="hd-display-service-item">
+							<span><span class="glyphicon glyphicon-earphone"></span>15500000000</span>
+						</div>
+						<div class="hd-display-service-item">
+							<span><span class="glyphicon glyphicon-comment"></span>在线客服</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 主体部分 -->
+			<div class="body">
+				<!-- 菜单显示 -->
+				<div class="bd-menu">
+					<div class="bd-menu-con">
+						<div class="bd-menu-con-item" v-for="item in kinds"><span><a :href="['kind.html?kind='+item.kind.id]">{{item.kind.name}}</a></span></div>
+					</div>
+				</div>
+				<div class="bd-con">
+					<div class="bd-con-nav">
+						<a href="index.html">首页</a>&gt;<a :href="['kind.html?kind='+flower[0].kind]">{{flower[0].kindName}}</a>&gt;<a href="#">{{flower[0].name}}</a>
+					</div>
+					<div class="bd-con-main">
+						<div class="bd-con-main-top">
+							<div class="bd-con-main-top-left"><img :src="['img/flower/'+flower[0].picture]" /></div>
+							<div class="bd-con-main-top-right">
+								<div class="bd-con-main-top-right-title">
+									<span class="detail-title">{{flower[0].name}}</span><br>
+									<span class="detail-title-disc">{{flower[0].nameDisc}}</span>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">类 别：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].kindName}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">编 号：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].code}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">材 料：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].material}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">包 装：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].wrap}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">花 语：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].word}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">附 送：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].attached}}</div>
+								</div>
+								<div class="bd-con-main-top-right-info">
+									<div class="bd-con-main-top-right-info-titile">配 送：</div>
+									<div class="bd-con-main-top-right-info-text">{{flower[0].area}}</div>
+								</div>
+								<div class="bd-con-main-top-right-price">
+									<div class="bd-con-main-top-right-price-pre"><s>原 价：¥{{flower[0].price}}</s> &nbsp;&nbsp;&nbsp;&nbsp;<span>{{flower[0].nowDis}}</span>折优惠</div>
+									<div class="bd-con-main-top-right-price-true">折 后：<span>¥{{flower[0].nowPrice}}</span></div>
+								</div>
+								<div class="bd-con-main-top-right-num">
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button">-</button>
+										</span>
+										<input type="text" class="form-control" placeholder="购买数量">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button">+</button>
+										</span>
+									</div>
+								</div>
+								<div class="bd-con-main-top-right-buy">
+									<button class="btn btn-default" type="button" v-on:click="tryBuy">立即购买</button>
+								</div>
+								
+							</div>
+						</div>
+						<div class="bd-con-main-detail">
+							<img :src="['img/flower/'+img]" v-for="img in flower[0].imgs"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!-- 底部固定部分 -->
+			<div class="footer">
+				<!-- 引导关注部分 -->
+				<div class="ft-focus">
+					<img src="img/focus.png" />
+					<img src="img/focus2.png" />
+				</div>
+				
+				<!-- 底部菜单显示 -->
+				<div class="ft-menu">
+					<img src="img/ft-menu.png" />
+				</div>
+				
+				<!-- 认证展示 -->
+				<div class="ft-scurity">
+					<img src="img/ft-scurity.png" />
+				</div>
+				
+				<!-- 资质备案许可展示 -->
+				<div class="ft-info">
+					<img src="img/ft-info.png" />
+				</div>
+			</div>
+		</div>
+	<script>
+		function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]); return null;
+		}
+		var vm = new Vue({
+			el: "#vueroot",      //vue控制挂载点
+			data: {       //数据
+				flower: "",
+				kinds: [],
+				info: "",
+				isLogin: 0,
+				isAdmin: 0,
+				name: ""
+			},
+			methods: { 
+				getFlower: function(that){
+					$.ajax({
+						url: "getFlowerById",
+						type: "POST",
+						contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+						data: {
+							id: getUrlParam("id")
+						},
+						dataType:"JSON",
+						success: function (data) {
+							that.flower = data;
+							console.log(data);
+						}
+					})
+				},
+				getKinds:function (that) {
+					$.getJSON("getKind",function(data){
+						var ks = data;
+						var re = new Array();
+						$.getJSON("getFlowers",function(data){
+							for(var i=0;i<ks.length;i++){
+								re[i] = new Object();
+								re[i].kind = ks[i];
+								re[i].flowers = new Array();
+								for(var j=0;j<data.length;j++)
+								if(ks[i].id==data[j].kind)re[i].flowers.push(data[j]);
+							}
+							that.kinds = re;
+							console.log(re);
+						});
+						
+					})
+				},
+				serch: function(){
+					window.location.href="result.html?info="+this.info;
+				},
+				checkLogin:function(that){
+					$.getJSON("checkLogin",function(data){
+						if(data[0].isAdmin!=null){
+							that.isLogin = 1;
+							that.isAdmin = data[0].isAdmin;
+							that.name = data[0].name;
+						}
+					});
+				},
+				logOut: function(){
+					this.isLogin = 0;
+					console.log("注销登录成功！");
+					alert("注销成功！");
+					window.location.href="reg.html";
+					$.getJSON("logOut",function(){});
+				},
+				tryBuy: function(){
+					var that = this;
+					var money = that.flower[0].nowPrice;
+					if(that.isLogin){
+						console.log("已登录，进入购买");
+						$.ajax({
+							url: "addOrder",
+							type: "POST",
+							contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+							data: {
+								id: getUrlParam("id"),
+								number: 1,
+								price: money
+							},
+							dataType:"Text",
+							success: function (data) {
+								if(data==1){
+									alert("下单成功");
+									window.location.href="my.html";
+								}
+							}
+						})
+					}
+					else console.log("mei进入购买");
+					
+				}
+			}, 
+			//生命周期函数
+			created:function(){ 
+				var that = this;
+				that.getFlower(that);
+				that.getKinds(that);
+				that.$options.methods.checkLogin(that);
+			}
+		})
+	</script>	
+	</body>
+</html>

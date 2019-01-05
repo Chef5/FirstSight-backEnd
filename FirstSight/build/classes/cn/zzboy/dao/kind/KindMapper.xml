@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzboy.dao.kind.KindMapper">
+	<!-- 获取热门推荐 -->
+	<select id="getKind" resultType="Kind">
+		select * from fs_kind
+	</select>
+	<!-- 获取专区名 -->
+	<select id="getKindNameById" resultType="String" parameterType="int">
+		select name from fs_kind where id=#{id}
+	</select>
+	<!-- 获取专区鲜花 -->
+	<select id="getFlowerByKind"  resultType="Flower" parameterType="kind">
+		select id,kind,name,picture,price from fs_flower where kind=#{kind}
+	</select>
+</mapper>

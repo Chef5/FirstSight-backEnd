@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzboy.dao.order.OrderMapper">
+	<!-- 添加订单 -->
+	<insert id="addOrder" parameterType="Order">
+		insert into fs_order(userid,flowerid,siteid,number,price,crtTime,crtBy,payTime) 
+		values(#{userid},#{flowerid},#{siteid},#{number},#{price},#{crtTime},#{crtBy},#{payTime})
+	</insert>
+	<!-- 获取用户所有订单 -->
+	<select id="getAllOrderByUserid" resultType="Order" parameterType="int">
+		select * from fs_order where userid=#{userid}
+	</select>
+	<!-- 获取所有待出库订单 -->
+	<select id="getNeedOutOrder" resultType="Order">
+		select * from fs_order where outTime is null
+	</select>
+	<!-- 出库订单 -->
+	<update id="outOrderById" parameterType="int">
+		update fs_order set outTime='2019-01-04 04:44:44' where id=#{id}
+	</update>
+</mapper>

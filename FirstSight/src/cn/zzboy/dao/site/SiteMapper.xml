@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzboy.dao.site.SiteMapper">
+	<select id="getSiteidByUserid" resultType="int" parameterType="int">
+		select id from fs_site where userid=#{userid} order by id limit 1
+	</select>
+	<select id="getSiteById" resultType="Site" parameterType="int">
+		select * from fs_site where userid=#{id}
+	</select>
+	<insert id="addSite" parameterType="Site">
+		insert into fs_site(userid,name,phone,site,crtTime,crtBy) values(#{userid},#{name},#{phone},#{site},#{crtTime},#{crtBy})
+	</insert>
+	<update id="mdfSite" parameterType="Site">
+		update fs_site set name=#{name},phone=#{phone},site=#{site},mdfTime=#{mdfTime},mdfBy=#{userid} where id=#{id}
+	</update>
+	<delete id="delSite" parameterType="int">
+		delete from fs_site where id=#{id}
+	</delete>
+</mapper>
