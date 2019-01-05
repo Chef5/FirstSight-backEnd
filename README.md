@@ -1,6 +1,6 @@
 # FirstSight-backEnd
 
-> 我的第一个用java框架写的动态网站，很生疏
+> 我的第一个用java SSM框架写的动态网站，很生疏
 
 Spring+SpringMVC+Mybatis+Mysql+Tomcat，前端使用jQuery+Vue进行数据交互和视图渲染。
 五天时间，前后台我一个人写的。
